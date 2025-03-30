@@ -1,103 +1,266 @@
+"use client";
+
 import Image from "next/image";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import FeaturedProjects from "@/components/FeaturedProjects";
+import {
+  fadeInUp,
+  staggerContainer,
+  slideInLeft,
+  slideInRight,
+  scaleUp,
+} from "@/lib/animations";
+import { featuredSkills, siteConfig } from "@/data";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <motion.div
+      className="container mx-auto px-4 py-6 md:py-12 overflow-hidden"
+      initial="hidden"
+      animate="visible"
+      variants={staggerContainer}
+    >
+      {/* Hero Section with enhanced visuals */}
+      <section className="relative min-h-[80vh] flex flex-col md:flex-row items-center justify-between gap-6 md:gap-12 mb-10 md:mb-20">
+        {/* Content */}
+        <motion.div
+          className="flex-1 text-center md:text-left z-10 pt-8 md:pt-0 order-2 md:order-1"
+          variants={slideInLeft}
+        >
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 md:mb-6">
+            Hi, I'm Ryan!
+            <span className="animated-gradient-text">
+              {siteConfig.name.split(" ")[0]}
+            </span>
+          </h1>
+          <motion.h2
+            className="text-xl sm:text-2xl md:text-3xl text-gray-700 dark:text-gray-300 mb-3 md:mb-6"
+            variants={fadeInUp}
+          >
+            {siteConfig.title}
+          </motion.h2>
+          <motion.p
+            className="text-base md:text-lg text-gray-600 dark:text-gray-400 mb-5 md:mb-8 max-w-lg mx-auto md:mx-0"
+            variants={fadeInUp}
+          >
+            {siteConfig.description}
+          </motion.p>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+          <motion.div
+            className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start"
+            variants={fadeInUp}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
+              <Link
+                href="/projects"
+                className="btn btn-primary px-5 py-3 rounded-lg w-full sm:w-auto"
+              >
+                <span className="relative z-10">View Projects</span>
+              </Link>
+            </motion.div>
+
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
+              <Link
+                href="/contact"
+                className="btn btn-secondary px-5 py-3 rounded-lg w-full sm:w-auto"
+              >
+                <span>Contact Me</span>
+                <motion.span
+                  className="ml-2 inline-block"
+                  animate={{ x: [0, 5, 0] }}
+                  transition={{
+                    repeat: Infinity,
+                    repeatType: "mirror",
+                    duration: 1.5,
+                    ease: "easeInOut",
+                  }}
+                >
+                  →
+                </motion.span>
+              </Link>
+            </motion.div>
+          </motion.div>
+        </motion.div>
+
+        {/* Profile Image */}
+        <motion.div
+          className="flex-1 flex justify-center mt-8 md:mt-0 z-10 order-1 md:order-2"
+          variants={slideInRight}
+        >
+          <motion.div
+            className="relative w-56 h-56 sm:w-56 sm:h-56 md:w-72 md:h-72 lg:w-80 lg:h-80"
+            whileHover={{ scale: 1.03 }}
+            transition={{ type: "spring", stiffness: 300, damping: 20 }}
           >
-            Read our docs
-          </a>
+            <motion.div
+              className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-600 to-purple-600"
+              animate={{
+                boxShadow: [
+                  "0px 0px 20px 0px rgba(79, 70, 229, 0.3)",
+                  "0px 0px 40px 5px rgba(79, 70, 229, 0.4)",
+                  "0px 0px 20px 0px rgba(79, 70, 229, 0.3)",
+                ],
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            ></motion.div>
+            <div className="absolute inset-2 rounded-full overflow-hidden border-2 border-white dark:border-gray-800">
+              <Image
+                src="/profile-placeholder.jpg"
+                alt="Ryan's profile"
+                fill
+                style={{ objectFit: "cover" }}
+                priority
+                className="scale-105 transition-transform duration-500"
+              />
+            </div>
+          </motion.div>
+        </motion.div>
+      </section>
+
+      {/* Featured Projects Section */}
+      <motion.section className="mb-12 md:mb-20" variants={fadeInUp}>
+        <div className="flex items-center mb-6 md:mb-8">
+          <motion.h2
+            className="text-xl md:text-3xl font-bold"
+            variants={fadeInUp}
+          >
+            Featured <span className="animated-gradient-text">Projects</span>
+          </motion.h2>
+          <motion.div
+            className="ml-4 h-0.5 flex-grow bg-gradient-to-r from-blue-600 to-transparent"
+            initial={{ scaleX: 0, originX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ delay: 0.3, duration: 0.8 }}
+          ></motion.div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+        <FeaturedProjects />
+      </motion.section>
+
+      {/* Skills Section with interactive cards */}
+      <motion.section className="mb-12 md:mb-20" variants={fadeInUp}>
+        <div className="flex items-center mb-6 md:mb-8">
+          <motion.h2
+            className="text-xl md:text-3xl font-bold"
+            variants={fadeInUp}
+          >
+            Technical <span className="animated-gradient-text">Skills</span>
+          </motion.h2>
+          <motion.div
+            className="ml-4 h-0.5 flex-grow bg-gradient-to-r from-blue-600 to-transparent"
+            initial={{ scaleX: 0, originX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ delay: 0.3, duration: 0.8 }}
+          ></motion.div>
+        </div>
+
+        <motion.div
+          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 md:gap-6"
+          variants={staggerContainer}
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+          {featuredSkills.map((skill, index) => {
+            // Map skill names to icons
+            const skillIcons: Record<string, string> = {
+              JavaScript: "⚡",
+              TypeScript: "🔷",
+              React: "⚛️",
+              "Next.js": "▲",
+              "Node.js": "🟢",
+              "CSS/Tailwind": "🎨",
+              "REST APIs": "🔌",
+              Git: "📊",
+            };
+
+            return (
+              <motion.div
+                key={skill}
+                className="card p-3 md:p-5 text-center"
+                variants={scaleUp}
+                whileHover={{
+                  y: -5,
+                  boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)",
+                }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
+              >
+                <motion.div
+                  className="text-xl md:text-2xl mb-2"
+                  whileHover={{ scale: 1.2, rotate: 5 }}
+                  transition={{ type: "spring", stiffness: 500, damping: 10 }}
+                >
+                  {skillIcons[skill] || "🔧"}
+                </motion.div>
+                <div className="text-xs sm:text-sm md:text-base font-medium">
+                  {skill}
+                </div>
+              </motion.div>
+            );
+          })}
+        </motion.div>
+      </motion.section>
+
+      {/* Call to Action with enhanced design */}
+      <motion.section
+        className="relative overflow-hidden rounded-xl p-5 md:p-10 text-center mb-8"
+        variants={fadeInUp}
+        whileHover={{ scale: 1.01 }}
+        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+      >
+        <div className="absolute inset-0 gradient-bg opacity-90"></div>
+        <motion.div className="relative z-10" variants={staggerContainer}>
+          <motion.h2
+            className="text-lg sm:text-xl md:text-3xl font-bold mb-3 md:mb-4 text-white"
+            variants={fadeInUp}
+          >
+            Interested in working together?
+          </motion.h2>
+          <motion.p
+            className="text-sm md:text-lg text-white text-opacity-90 mb-4 md:mb-6 max-w-lg mx-auto"
+            variants={fadeInUp}
+          >
+            Let's discuss how I can help with your next project and turn your
+            ideas into reality.
+          </motion.p>
+          <motion.div
+            variants={fadeInUp}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <Link
+              href="/contact"
+              className="inline-block bg-white text-blue-600 font-medium px-6 py-2 sm:px-8 sm:py-3 rounded-lg shadow-md transition-all duration-300"
+            >
+              <span className="flex items-center justify-center">
+                Get in Touch
+                <motion.svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4 sm:h-5 sm:w-5 ml-2"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  animate={{ x: [0, 5, 0] }}
+                  transition={{
+                    repeat: Infinity,
+                    repeatType: "mirror",
+                    duration: 1.5,
+                    ease: "easeInOut",
+                  }}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M14 5l7 7m0 0l-7 7m7-7H3"
+                  />
+                </motion.svg>
+              </span>
+            </Link>
+          </motion.div>
+        </motion.div>
+      </motion.section>
+    </motion.div>
   );
 }
