@@ -10,7 +10,7 @@ const Footer = () => {
   const socialLinks = [
     {
       name: "GitHub",
-      href: "https://github.com/yourusername",
+      href: "https://github.com/ryanviana",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -24,7 +24,7 @@ const Footer = () => {
     },
     {
       name: "LinkedIn",
-      href: "https://linkedin.com/in/yourusername",
+      href: "https://linkedin.com/in/ryanviana",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -38,7 +38,7 @@ const Footer = () => {
     },
     {
       name: "Twitter",
-      href: "https://twitter.com/yourusername",
+      href: "https://twitter.com/o_ryanviana",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
