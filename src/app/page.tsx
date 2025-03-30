@@ -17,7 +17,6 @@ import { getFeaturedSkills } from "@/lib/skills";
 
 export default function Home() {
   const [featuredSkills, setFeaturedSkills] = useState<string[]>([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadSkills = async () => {
@@ -26,8 +25,6 @@ export default function Home() {
         setFeaturedSkills(skills);
       } catch (error) {
         console.error("Error loading skills:", error);
-      } finally {
-        setLoading(false);
       }
     };
 
@@ -51,7 +48,7 @@ export default function Home() {
           variants={slideInLeft}
         >
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 md:mb-6">
-            Hi, I'm Ryan!
+            Hi, I&apos;m Ryan!
             <span className="animated-gradient-text">
               {siteConfig.name.split(" ")[0]}
             </span>
@@ -194,7 +191,7 @@ export default function Home() {
           className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 md:gap-6"
           variants={staggerContainer}
         >
-          {featuredSkills.map((skill, index) => {
+          {featuredSkills.map((skill) => {
             // Map skill names to icons
             const skillIcons: Record<string, string> = {
               JavaScript: "⚡",
@@ -260,8 +257,8 @@ export default function Home() {
             className="text-sm md:text-lg text-white text-opacity-90 mb-4 md:mb-6 max-w-lg mx-auto"
             variants={fadeInUp}
           >
-            Let's discuss how I can help with your next project and turn your
-            ideas into reality.
+            Let&apos;s discuss how I can help with your next project and turn
+            your ideas into reality.
           </motion.p>
           <motion.div
             key="cta-button-container"

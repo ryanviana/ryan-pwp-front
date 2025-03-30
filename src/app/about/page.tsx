@@ -17,25 +17,13 @@ import {
   getAchievements,
 } from "@/lib/experience";
 import { getAllSkillCategories } from "@/lib/skills";
+import { WorkExperience, Education, Achievement } from "@/types";
 
 const AboutPage = () => {
   const [skillCategories, setSkillCategories] = useState<SkillCategory[]>([]);
-  const [workExperiences, setWorkExperiences] = useState<any[]>([]);
-  const [educations, setEducations] = useState<any[]>([]);
-  const [achievementsData, setAchievements] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  // Convert skills to the format expected by the skill bars
-  const skillsWithLevels = skillCategories.flatMap((category) =>
-    category.skills.map((skill, index) => {
-      // Generate a somewhat random but consistent level between 75 and 95
-      const level = 75 + (((index + 1) * category.id * 7) % 21);
-      return {
-        name: skill,
-        level,
-      };
-    })
-  );
+  const [workExperiences, setWorkExperiences] = useState<WorkExperience[]>([]);
+  const [educations, setEducations] = useState<Education[]>([]);
+  const [achievementsData, setAchievements] = useState<Achievement[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -55,7 +43,7 @@ const AboutPage = () => {
       } catch (error) {
         console.error("Error loading about page data:", error);
       } finally {
-        setLoading(false);
+        // Re-add the finally block
       }
     };
 
@@ -85,12 +73,12 @@ const AboutPage = () => {
       {/* Hero Section */}
       <motion.div className="flex flex-col md:flex-row items-center gap-8 mb-16">
         <motion.div className="w-full md:w-1/2" variants={slideInLeft}>
-          <h2 className="text-2xl font-bold mb-4">Hi, I'm Ryan</h2>
+          <h2 className="text-2xl font-bold mb-4">Hi, I&apos;m Ryan</h2>
           <p className="text-gray-600 dark:text-gray-400 mb-4">
-            I'm a passionate software developer with experience building web
-            applications. I specialize in frontend development with React and
-            Next.js, but I'm also comfortable working with backend technologies
-            like Java and Node.js.
+            I&apos;m a passionate software developer with experience building
+            web applications. I specialize in frontend development with React
+            and Next.js, but I&apos;m also comfortable working with backend
+            technologies like Java and Node.js.
           </p>
           <p className="text-gray-600 dark:text-gray-400 mb-4">
             My approach to development focuses on creating intuitive,
@@ -99,9 +87,9 @@ const AboutPage = () => {
             industry trends and best practices.
           </p>
           <p className="text-gray-600 dark:text-gray-400 mb-6">
-            I'm currently launching a startup focused on the AI space. I'm
-            passionate about learning more about entrepreneurship and scaling a
-            business effectively.
+            I&apos;m currently launching a startup focused on the AI space.
+            I&apos;m passionate about learning more about entrepreneurship and
+            scaling a business effectively.
           </p>
           <motion.div
             className="flex gap-4"
@@ -158,8 +146,6 @@ const AboutPage = () => {
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5">
               {category.skills.map((skill, index) => {
-                // Generate a somewhat random but consistent level between 75 and 95 for the gradient
-                const level = 75 + (((index + 1) * category.id * 7) % 21);
                 const randomDelay = (Math.random() * 0.3).toFixed(2);
                 const angle = (index * 37) % 360;
                 return (
@@ -325,11 +311,11 @@ const AboutPage = () => {
 
       {/* CTA Section */}
       <motion.div className="mt-16 text-center py-12 card" variants={fadeInUp}>
-        <h2 className="text-2xl font-bold mb-4">Let's Work Together</h2>
+        <h2 className="text-2xl font-bold mb-4">Let&apos;s Work Together</h2>
         <p className="text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
-          I'm currently available for freelance work or full-time positions. If
-          you're interested in collaborating or have any questions, feel free to
-          reach out!
+          I&apos;m currently available for freelance work or full-time
+          positions. If you&apos;re interested in collaborating or have any
+          questions, feel free to reach out!
         </p>
         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
           <Link

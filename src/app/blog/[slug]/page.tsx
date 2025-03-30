@@ -12,9 +12,10 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const post = await getBlogPostBySlug(params.slug);
+  const { slug } = await params;
+  const post = await getBlogPostBySlug(slug);
 
   if (!post) {
     return {
@@ -24,7 +25,7 @@ export async function generateMetadata({
   }
 
   return {
-    title: `${post.title} | Ryan's Portfolio`,
+    title: `${post.title} | Ryan&apos;s Portfolio`,
     description: post.excerpt,
   };
 }
@@ -40,10 +41,11 @@ export async function generateStaticParams() {
 export default async function BlogPostPage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
   // Fetch blog post from the API with fallback to static data
-  const post = await getBlogPostBySlug(params.slug);
+  const { slug } = await params;
+  const post = await getBlogPostBySlug(slug);
 
   if (!post) {
     return (
@@ -51,7 +53,7 @@ export default async function BlogPostPage({
         <div className="max-w-3xl mx-auto">
           <h1 className="text-4xl font-bold mb-6">Post Not Found</h1>
           <p className="mb-6">
-            The blog post you're looking for does not exist.
+            The blog post you&apos;re looking for does not exist.
           </p>
           <Link
             href="/blog"

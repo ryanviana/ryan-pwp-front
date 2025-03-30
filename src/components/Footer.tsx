@@ -75,7 +75,7 @@ const Footer = () => {
               About Me
             </motion.h3>
             <motion.p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
-              I'm a passionate developer focused on creating intuitive and
+              I&apos;m a passionate developer focused on creating intuitive and
               performant web applications. Feel free to reach out for
               collaboration or just to say hello!
             </motion.p>

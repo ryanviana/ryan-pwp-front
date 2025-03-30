@@ -8,7 +8,6 @@ import {
   slideInRight,
 } from "@/lib/animations";
 import ContactForm from "@/components/ContactForm";
-import Image from "next/image";
 import { siteConfig } from "@/data";
 import { ReactNode } from "react";
 
@@ -251,8 +250,8 @@ const ContactPage = () => {
               transition={{ delay: 0.8 }}
             >
               <p className="text-gray-700 dark:text-gray-300 italic">
-                "I'm always open to discussing new projects, creative ideas or
-                opportunities to be part of your visions."
+                &quot;I&apos;m always open to discussing new projects, creative
+                ideas or opportunities to be part of your visions.&quot;
               </p>
             </motion.div>
           </motion.div>

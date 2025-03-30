@@ -20,10 +20,11 @@ export default function NoDemo() {
 
         <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-xl p-8 mb-8 shadow-lg border border-gray-100 dark:border-gray-700">
           <p className="text-xl mb-4">
-            Sorry, we don't have a demo for this project.
+            Sorry, we don&apos;t have a demo for this project.
           </p>
           <p className="text-lg text-gray-600 dark:text-gray-300">
-            *deep breath* <span className="italic">We're working on it...</span>
+            *deep breath*{" "}
+            <span className="italic">We&apos;re working on it...</span>
           </p>
         </div>
 

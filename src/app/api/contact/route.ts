@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { siteConfig } from "@/data";
 import nodemailer from "nodemailer";
 
 // Create reusable transporter with the provided credentials

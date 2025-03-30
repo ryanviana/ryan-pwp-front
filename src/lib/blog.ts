@@ -3,7 +3,6 @@ import {
   RelatedPost,
   blogPosts,
   getBlogPostBySlug as getDataBlogPostBySlug,
-  getLatestBlogPosts as getDataLatestBlogPosts,
 } from "@/data";
 import * as api from "./api";
 import { fetchWithFallback } from "./api";

@@ -249,8 +249,8 @@ const ProjectsPage = () => {
       <motion.div className="mt-16 text-center" variants={fadeInUp}>
         <h3 className="text-xl font-bold mb-4">Interested in collaborating?</h3>
         <p className="text-gray-600 dark:text-gray-400 mb-6 max-w-2xl mx-auto">
-          I'm always open to discussing new projects and opportunities. Let's
-          create something amazing together.
+          I&apos;m always open to discussing new projects and opportunities.
+          Let&apos;s create something amazing together.
         </p>
         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
           <Link

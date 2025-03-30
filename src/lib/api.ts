@@ -43,26 +43,92 @@ async function fetchAPI<T>(
   }
 }
 
+// Define proper types for API responses
+interface Project {
+  id: number;
+  title: string;
+  description: string;
+  fullDescription?: string;
+  image: string;
+  tags: string[];
+  slug: string;
+  demoUrl?: string;
+  githubUrl?: string;
+  features?: string[];
+  featured?: boolean;
+}
+
+interface BlogPost {
+  id?: string;
+  title: string;
+  slug: string;
+  date: string;
+  content: string;
+  excerpt: string;
+  coverImage: string;
+  readingTime: string;
+  tags: string[];
+  relatedPosts?: {
+    slug: string;
+    title: string;
+    coverImage: string;
+  }[];
+}
+
+interface WorkExperience {
+  id: number;
+  title: string;
+  company: string;
+  location?: string;
+  startDate: string;
+  endDate: string;
+  description: string[];
+}
+
+interface Achievement {
+  id: number;
+  title: string;
+  organization: string;
+  date: string;
+  description: string;
+}
+
+interface Education {
+  id: number;
+  degree: string;
+  institution: string;
+  startYear: string;
+  endYear: string;
+  location?: string;
+  description?: string;
+}
+
+interface SkillCategory {
+  id: number;
+  name: string;
+  skills: string[];
+}
+
 // Project endpoints
 export async function getAllProjects() {
-  return fetchAPI<any[]>("/projects");
+  return fetchAPI<Project[]>("/projects");
 }
 
 export async function getFeaturedProjects() {
-  return fetchAPI<any[]>("/projects/featured");
+  return fetchAPI<Project[]>("/projects/featured");
 }
 
 export async function getProjectBySlug(slug: string) {
-  return fetchAPI<any>(`/projects/${slug}`);
+  return fetchAPI<Project>(`/projects/${slug}`);
 }
 
 // Blog endpoints
 export async function getAllBlogPosts() {
-  return fetchAPI<any[]>("/blog");
+  return fetchAPI<BlogPost[]>("/blog");
 }
 
 export async function getBlogPostBySlug(slug: string) {
-  return fetchAPI<any>(`/blog/${slug}`);
+  return fetchAPI<BlogPost>(`/blog/${slug}`);
 }
 
 export async function getLatestBlogPosts(count: number = 3) {
@@ -72,20 +138,20 @@ export async function getLatestBlogPosts(count: number = 3) {
 
 // Experience endpoints
 export async function getWorkExperience() {
-  return fetchAPI<any[]>("/experience/work");
+  return fetchAPI<WorkExperience[]>("/experience/work");
 }
 
 export async function getAchievements() {
-  return fetchAPI<any[]>("/experience/achievements");
+  return fetchAPI<Achievement[]>("/experience/achievements");
 }
 
 export async function getEducation() {
-  return fetchAPI<any[]>("/experience/education");
+  return fetchAPI<Education[]>("/experience/education");
 }
 
 // Skills endpoints
 export async function getSkills() {
-  return fetchAPI<any[]>("/skills");
+  return fetchAPI<SkillCategory[]>("/skills");
 }
 
 // Helper function to handle API failures
