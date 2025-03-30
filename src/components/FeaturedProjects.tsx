@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Project } from "@/data";
 import { getFeaturedProjects } from "@/lib/projects";
-import SafeImage from "./SafeImage";
 
 const FeaturedProjects = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -76,7 +76,7 @@ const FeaturedProjects = () => {
                 className="relative w-full h-full group-hover:scale-110 transition-transform duration-700"
                 style={{ transformOrigin: "center" }}
               >
-                <SafeImage
+                <Image
                   src={project.image}
                   alt={project.title}
                   fill

@@ -3,10 +3,10 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { fadeInUp, staggerContainer } from "@/lib/animations";
 import { Project } from "@/data";
 import { getAllProjects } from "@/lib/projects";
-import SafeImage from "@/components/SafeImage";
 
 const ProjectsPage = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -144,7 +144,7 @@ const ProjectsPage = () => {
             whileHover={{ y: -5, transition: { duration: 0.2 } }}
           >
             <div className="relative overflow-hidden aspect-video">
-              <SafeImage
+              <Image
                 src={project.image}
                 alt={project.title}
                 fill

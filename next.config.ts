@@ -15,8 +15,13 @@ const nextConfig: NextConfig = {
         port: "",
         pathname: "**",
       },
+      {
+        protocol: "https",
+        hostname: "pwpimagesryan.s3.sa-east-1.amazonaws.com",
+        port: "",
+        pathname: "**",
+      },
     ],
-    minimumCacheTTL: 60 * 60 * 24 * 7, // Cache images for 7 days
   },
 };
 

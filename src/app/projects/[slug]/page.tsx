@@ -1,11 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { useParams, notFound } from "next/navigation";
 import { Project } from "@/data";
 import { getProjectBySlug } from "@/lib/projects";
-import SafeImage from "@/components/SafeImage";
 
 export default function ProjectDetail() {
   const params = useParams();
@@ -93,7 +93,7 @@ export default function ProjectDetail() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
         <div className="relative w-full h-80 lg:h-full rounded-xl overflow-hidden border border-gray-200 dark:border-gray-800">
-          <SafeImage
+          <Image
             src={project.image}
             alt={project.title}
             fill
