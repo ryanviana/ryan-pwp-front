@@ -8,6 +8,7 @@ export const metadata = {
 };
 
 export default async function BlogPage() {
+  // Fetch blog posts from the API with fallback to static data
   const posts = await getAllBlogPosts();
 
   return (

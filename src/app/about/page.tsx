@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,26 +10,58 @@ import {
   slideInLeft,
   slideInRight,
 } from "@/lib/animations";
+import { SkillCategory } from "@/data";
 import {
-  skillCategories,
-  workExperiences,
-  education,
-  achievements,
-} from "@/data";
-
-// Convert skills from the data file to the format expected by the skill bars
-const skillsWithLevels = skillCategories.flatMap((category) =>
-  category.skills.map((skill, index) => {
-    // Generate a somewhat random but consistent level between 75 and 95
-    const level = 75 + (((index + 1) * category.id * 7) % 21);
-    return {
-      name: skill,
-      level,
-    };
-  })
-);
+  getWorkExperience,
+  getEducation,
+  getAchievements,
+} from "@/lib/experience";
+import { getAllSkillCategories } from "@/lib/skills";
 
 const AboutPage = () => {
+  const [skillCategories, setSkillCategories] = useState<SkillCategory[]>([]);
+  const [workExperiences, setWorkExperiences] = useState<any[]>([]);
+  const [educations, setEducations] = useState<any[]>([]);
+  const [achievementsData, setAchievements] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // Convert skills to the format expected by the skill bars
+  const skillsWithLevels = skillCategories.flatMap((category) =>
+    category.skills.map((skill, index) => {
+      // Generate a somewhat random but consistent level between 75 and 95
+      const level = 75 + (((index + 1) * category.id * 7) % 21);
+      return {
+        name: skill,
+        level,
+      };
+    })
+  );
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Fetch all data in parallel
+        const [skills, work, edu, achievements] = await Promise.all([
+          getAllSkillCategories(),
+          getWorkExperience(),
+          getEducation(),
+          getAchievements(),
+        ]);
+
+        setSkillCategories(skills);
+        setWorkExperiences(work);
+        setEducations(edu);
+        setAchievements(achievements);
+      } catch (error) {
+        console.error("Error loading about page data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <motion.div
       className="container mx-auto px-4 py-16"
@@ -66,9 +99,9 @@ const AboutPage = () => {
             industry trends and best practices.
           </p>
           <p className="text-gray-600 dark:text-gray-400 mb-6">
-            When I'm not coding, you'll find me hiking, reading, or
-            experimenting with new technologies. I'm always eager to learn and
-            take on new challenges.
+            I'm currently launching a startup focused on the AI space. I'm
+            passionate about learning more about entrepreneurship and scaling a
+            business effectively.
           </p>
           <motion.div
             className="flex gap-4"
@@ -99,9 +132,10 @@ const AboutPage = () => {
         >
           <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-blue-500 shadow-xl">
             <Image
-              src="/profile-placeholder.jpg"
+              src="/profile_contact_me.png"
               alt="Profile"
               fill
+              sizes="(max-width: 768px) 16rem, 20rem"
               style={{ objectFit: "cover" }}
               className="rounded-full"
             />
@@ -112,33 +146,72 @@ const AboutPage = () => {
 
       {/* Skills Section */}
       <motion.div className="mb-16" variants={fadeInUp}>
-        <h2 className="text-2xl font-bold mb-8 text-center">My Skills</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {skillsWithLevels.map((skill, index) => (
-            <motion.div
-              key={skill.name}
-              className="card p-4"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-            >
-              <div className="flex justify-between mb-2">
-                <span className="font-medium">{skill.name}</span>
-                <span className="text-gray-600 dark:text-gray-400">
-                  {skill.level}%
-                </span>
-              </div>
-              <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
-                <motion.div
-                  className="bg-blue-600 h-2.5 rounded-full"
-                  initial={{ width: 0 }}
-                  animate={{ width: `${skill.level}%` }}
-                  transition={{ duration: 1, delay: index * 0.1 }}
-                ></motion.div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+        <h2 className="text-2xl font-bold mb-2 text-center">My Skills</h2>
+        <div className="w-24 h-1.5 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full mx-auto mb-8"></div>
+
+        {skillCategories.map((category, categoryIndex) => (
+          <div key={category.id} className="mb-16">
+            <div className="flex items-center mb-8">
+              <div className="w-16 h-1.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mr-4"></div>
+              <h3 className="text-xl font-semibold">{category.name}</h3>
+              <div className="flex-grow h-0.5 bg-gradient-to-r from-gray-200 to-transparent dark:from-gray-700 ml-4"></div>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5">
+              {category.skills.map((skill, index) => {
+                // Generate a somewhat random but consistent level between 75 and 95 for the gradient
+                const level = 75 + (((index + 1) * category.id * 7) % 21);
+                const randomDelay = (Math.random() * 0.3).toFixed(2);
+                const angle = (index * 37) % 360;
+                return (
+                  <motion.div
+                    key={`${category.id}-${index}`}
+                    className="relative z-0 group"
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 260,
+                      damping: 20,
+                      delay: categoryIndex * 0.1 + index * 0.03,
+                    }}
+                    whileHover={{
+                      scale: 1.05,
+                      transition: { duration: 0.2 },
+                    }}
+                  >
+                    <div className="relative h-28 rounded-xl overflow-hidden shadow-lg border border-gray-100/50 dark:border-gray-700/50 backdrop-blur-sm">
+                      {/* Animated background gradient */}
+                      <div
+                        className="absolute inset-0 bg-gradient-to-br opacity-10 dark:opacity-20 group-hover:opacity-20 dark:group-hover:opacity-30 transition-all duration-500"
+                        style={{
+                          backgroundImage: `linear-gradient(${angle}deg, #3b82f6, #8b5cf6, #ec4899)`,
+                          backgroundSize: "200% 200%",
+                          animation: `gradient 8s ease infinite ${randomDelay}s`,
+                        }}
+                      ></div>
+
+                      {/* Glass effect container */}
+                      <div className="absolute inset-0.5 rounded-lg bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm flex items-center justify-center">
+                        {/* Inner content */}
+                        <div className="text-center px-3 relative z-10">
+                          <div className="font-medium text-lg mb-1.5">
+                            {skill}
+                          </div>
+                          <div className="w-12 h-1 mx-auto rounded-full bg-gradient-to-r from-blue-500 to-purple-500 opacity-70 transform group-hover:scale-150 transition-transform duration-300"></div>
+                        </div>
+                      </div>
+
+                      {/* Edge highlights */}
+                      <div className="absolute inset-0 rounded-xl overflow-hidden">
+                        <div className="absolute -inset-1.5 top-0 bg-gradient-to-r from-blue-500 to-purple-500 opacity-20 blur-md group-hover:opacity-30 transition-opacity duration-300"></div>
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </div>
+        ))}
       </motion.div>
 
       {/* Experience Section */}
@@ -170,7 +243,7 @@ const AboutPage = () => {
                   </span>
                 </div>
                 <ul className="text-gray-600 dark:text-gray-400 list-disc list-inside space-y-1">
-                  {exp.description.map((item, i) => (
+                  {exp.description.map((item: string, i: number) => (
                     <li key={i}>{item}</li>
                   ))}
                 </ul>
@@ -184,7 +257,7 @@ const AboutPage = () => {
       <motion.div variants={fadeInUp} className="mt-16">
         <h2 className="text-2xl font-bold mb-8 text-center">Education</h2>
         <div className="space-y-8">
-          {education.map((edu, index) => (
+          {educations.map((edu, index) => (
             <motion.div
               key={edu.id}
               className="card p-6 relative"
@@ -223,7 +296,7 @@ const AboutPage = () => {
       <motion.div variants={fadeInUp} className="mt-16">
         <h2 className="text-2xl font-bold mb-8 text-center">Achievements</h2>
         <div className="space-y-8">
-          {achievements.map((achievement, index) => (
+          {achievementsData.map((achievement, index) => (
             <motion.div
               key={achievement.id}
               className="card p-6 relative"

@@ -5,6 +5,8 @@ import {
   getBlogPostBySlug as getDataBlogPostBySlug,
   getLatestBlogPosts as getDataLatestBlogPosts,
 } from "@/data";
+import * as api from "./api";
+import { fetchWithFallback } from "./api";
 
 // Re-export the types
 export type { BlogPost, RelatedPost };
@@ -19,19 +21,24 @@ export const calculateReadingTime = (content: string): string => {
 
 // Maintain backward compatibility with async functions
 export async function getAllBlogPosts(): Promise<BlogPost[]> {
-  return [...blogPosts].sort((a, b) => {
-    return new Date(b.date).getTime() - new Date(a.date).getTime();
-  });
+  return await fetchWithFallback(
+    () => api.getAllBlogPosts(),
+    [...blogPosts].sort((a, b) => {
+      return new Date(b.date).getTime() - new Date(a.date).getTime();
+    })
+  );
 }
 
 export async function getBlogPostBySlug(
   slug: string
 ): Promise<BlogPost | null> {
-  return getDataBlogPostBySlug(slug);
+  return await fetchWithFallback(
+    () => api.getBlogPostBySlug(slug),
+    getDataBlogPostBySlug(slug)
+  );
 }
 
-// Mock implementation for loadBlogPostsFromFiles - in a real app, this would
-// load from actual markdown files, but for now it returns the mock data
+// Now this will actually load from the API, with static data as fallback
 export async function loadBlogPostsFromFiles(): Promise<BlogPost[]> {
   return getAllBlogPosts();
 }

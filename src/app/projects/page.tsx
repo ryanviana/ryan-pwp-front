@@ -5,7 +5,8 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { fadeInUp, staggerContainer } from "@/lib/animations";
-import { Project, projects as projectsData } from "@/data";
+import { Project } from "@/data";
+import { getAllProjects } from "@/lib/projects";
 
 const ProjectsPage = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -14,9 +15,11 @@ const ProjectsPage = () => {
   const [categories, setCategories] = useState<string[]>([]);
 
   useEffect(() => {
-    // Load projects from the data file
+    // Load projects from the API
     const fetchProjects = async () => {
       try {
+        const projectsData = await getAllProjects();
+
         // Extract unique categories from tags
         const allTags = projectsData.flatMap((project) => project.tags);
         const uniqueCategories = ["all", ...new Set(allTags)];

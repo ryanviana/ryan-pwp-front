@@ -49,6 +49,7 @@ module.exports = {
         "gradient-x": "gradient-x 10s ease infinite",
         "gradient-y": "gradient-y 10s ease infinite",
         "gradient-xy": "gradient-xy 10s ease infinite",
+        "pulse-x": "pulse-x 1.5s ease-in-out infinite",
       },
       keyframes: {
         "gradient-y": {
@@ -79,6 +80,14 @@ module.exports = {
           "50%": {
             "background-size": "200% 200%",
             "background-position": "right center",
+          },
+        },
+        "pulse-x": {
+          "0%, 100%": {
+            transform: "translateX(0)",
+          },
+          "50%": {
+            transform: "translateX(3px)",
           },
         },
       },

@@ -35,7 +35,7 @@ export const siteConfig = {
     linkedin: "https://linkedin.com/in/yourusername",
     twitter: "https://twitter.com/yourusername",
   },
-  resumeUrl: "/your-resume.pdf", // Place your resume in the public folder
+  resumeUrl: "/resume.pdf", // Place your resume in the public folder
 };
 ```
 

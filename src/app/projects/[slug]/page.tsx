@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams, notFound } from "next/navigation";
-import { Project, getProjectBySlug } from "@/data";
+import { Project } from "@/data";
+import { getProjectBySlug } from "@/lib/projects";
 
 export default function ProjectDetail() {
   const params = useParams();
@@ -19,7 +20,7 @@ export default function ProjectDetail() {
           return;
         }
 
-        const projectData = getProjectBySlug(params.slug);
+        const projectData = await getProjectBySlug(params.slug);
         setProject(projectData);
       } catch (error) {
         console.error("Error fetching project:", error);

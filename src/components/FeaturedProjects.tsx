@@ -4,17 +4,17 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Project, getFeaturedProjects } from "@/data";
-import { staggerContainer, cardVariants } from "@/lib/animations";
+import { Project } from "@/data";
+import { getFeaturedProjects } from "@/lib/projects";
 
 const FeaturedProjects = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const loadProjects = () => {
+    const loadProjects = async () => {
       try {
-        const featuredProjects = getFeaturedProjects();
+        const featuredProjects = await getFeaturedProjects();
         setProjects(featuredProjects);
       } catch (error) {
         console.error("Error loading projects:", error);
@@ -55,31 +55,26 @@ const FeaturedProjects = () => {
   }
 
   return (
-    <motion.div
-      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"
-      variants={staggerContainer}
-      initial="hidden"
-      animate="visible"
-    >
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
       {projects.map((project, index) => (
         <motion.div
           key={project.id}
           className="card h-full flex flex-col"
-          variants={cardVariants}
-          whileHover="hover"
-          custom={index}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: index * 0.1 }}
+          whileHover={{
+            y: -5,
+            boxShadow:
+              "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+          }}
         >
           <div className="relative w-full h-36 sm:h-40 md:h-48 group overflow-hidden">
-            <motion.div
-              className="absolute inset-0 z-10 bg-gradient-to-t from-black/60 to-transparent opacity-0"
-              whileHover={{ opacity: 1 }}
-              transition={{ duration: 0.3 }}
-            />
-            <motion.div className="w-full h-full overflow-hidden">
-              <motion.div
-                whileHover={{ scale: 1.1 }}
-                transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
-                className="relative w-full h-full"
+            <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <div className="w-full h-full overflow-hidden">
+              <div
+                className="relative w-full h-full group-hover:scale-110 transition-transform duration-700"
+                style={{ transformOrigin: "center" }}
               >
                 <Image
                   src={project.image}
@@ -88,69 +83,44 @@ const FeaturedProjects = () => {
                   style={{ objectFit: "cover" }}
                   className="transition-transform duration-700"
                 />
-              </motion.div>
-            </motion.div>
-            <motion.div
-              className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 text-white transform translate-y-full z-20"
-              whileHover={{ translateY: 0 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
-            >
+              </div>
+            </div>
+            <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-20">
               <span className="inline-block px-2 py-1 text-xs rounded-full bg-blue-600 font-medium mb-2">
                 Featured
               </span>
-            </motion.div>
+            </div>
           </div>
           <div className="p-3 sm:p-4 md:p-6 flex flex-col flex-grow">
-            <motion.h3
-              className="text-base sm:text-lg md:text-xl font-semibold mb-2 relative"
-              whileHover={{ color: "#3b82f6" }}
-              transition={{ duration: 0.2 }}
-            >
+            <h3 className="text-base sm:text-lg md:text-xl font-semibold mb-2 relative hover:text-blue-600 transition-colors duration-200">
               {project.title}
-              <motion.span
-                className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 w-0"
-                whileHover={{ width: "100%" }}
-                transition={{ duration: 0.3 }}
-              />
-            </motion.h3>
+              <span className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 w-0 group-hover:w-full transition-all duration-300" />
+            </h3>
             <p className="text-xs sm:text-sm md:text-base text-gray-600 dark:text-gray-400 mb-3 md:mb-4 flex-grow">
               {project.description}
             </p>
             <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-3 md:mb-4">
-              {project.tags.map((tag) => (
-                <motion.span
-                  key={tag}
-                  className="text-xs bg-gray-100 dark:bg-gray-800 rounded-full px-2 py-0.5 sm:px-3 sm:py-1"
-                  whileHover={{
-                    backgroundColor: "#3b82f6",
-                    color: "white",
-                    scale: 1.05,
-                  }}
-                  transition={{ duration: 0.2 }}
+              {project.tags.map((tag, tagIndex) => (
+                <span
+                  key={`${project.id}-tag-${tagIndex}`}
+                  className="text-xs bg-gray-100 dark:bg-gray-800 rounded-full px-2 py-0.5 sm:px-3 sm:py-1 hover:bg-blue-600 hover:text-white hover:scale-105 transition-all duration-200"
                 >
                   {tag}
-                </motion.span>
+                </span>
               ))}
             </div>
-            <motion.div whileHover={{ x: 3 }} transition={{ duration: 0.2 }}>
+            <div className="hover:translate-x-1 transition-transform duration-200">
               <Link
                 href={`/projects/${project.slug}`}
                 className="text-blue-600 hover:text-blue-800 font-medium inline-flex items-center text-xs sm:text-sm md:text-base"
               >
                 View Project
-                <motion.svg
+                <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-3 w-3 sm:h-4 sm:w-4 ml-1"
+                  className="h-3 w-3 sm:h-4 sm:w-4 ml-1 animate-pulse-x"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
-                  animate={{ x: [0, 3, 0] }}
-                  transition={{
-                    repeat: Infinity,
-                    repeatType: "mirror",
-                    duration: 1.5,
-                    ease: "easeInOut",
-                  }}
                 >
                   <path
                     strokeLinecap="round"
@@ -158,13 +128,13 @@ const FeaturedProjects = () => {
                     strokeWidth={2}
                     d="M9 5l7 7-7 7"
                   />
-                </motion.svg>
+                </svg>
               </Link>
-            </motion.div>
+            </div>
           </div>
         </motion.div>
       ))}
-    </motion.div>
+    </div>
   );
 };
 

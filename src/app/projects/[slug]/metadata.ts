@@ -1,12 +1,12 @@
 import { Metadata } from "next";
-import { getProjectBySlug } from "@/data";
+import { getProjectBySlug } from "@/lib/projects";
 
 export async function generateMetadata({
   params,
 }: {
   params: { slug: string };
 }): Promise<Metadata> {
-  const project = getProjectBySlug(params.slug);
+  const project = await getProjectBySlug(params.slug);
 
   if (!project) {
     return {

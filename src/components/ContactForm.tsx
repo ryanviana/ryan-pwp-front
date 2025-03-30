@@ -84,10 +84,20 @@ const ContactForm = () => {
 
     setFormStatus("submitting");
 
-    // In a real application, this would send data to an API
     try {
-      // Simulate API call with a delay
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to send message");
+      }
 
       // Reset form after successful submission
       setFormData({
@@ -104,6 +114,7 @@ const ContactForm = () => {
         setFormStatus("idle");
       }, 5000);
     } catch (error) {
+      console.error("Error sending message:", error);
       setFormStatus("error");
     }
   };
@@ -136,7 +147,7 @@ const ContactForm = () => {
                 viewBox="0 0 20 20"
                 fill="currentColor"
                 initial={{ scale: 0 }}
-                animate={{ scale: 1, rotate: [0, 5, 0] }}
+                animate={{ scale: 1, rotate: [0, 5] }}
                 transition={{
                   delay: 0.2,
                   type: "spring",
@@ -150,7 +161,10 @@ const ContactForm = () => {
                   clipRule="evenodd"
                 />
               </motion.svg>
-              <span>Thank you! Your message has been sent.</span>
+              <span>
+                Thank you! Your message has been sent to
+                ryan.viana@grupoprisma.tech
+              </span>
             </div>
           </motion.div>
         )}
@@ -172,7 +186,7 @@ const ContactForm = () => {
                 viewBox="0 0 20 20"
                 fill="currentColor"
                 initial={{ scale: 0 }}
-                animate={{ scale: 1, rotate: [0, 5, 0] }}
+                animate={{ scale: 1, rotate: [0, 5] }}
                 transition={{
                   delay: 0.2,
                   type: "spring",
@@ -186,7 +200,10 @@ const ContactForm = () => {
                   clipRule="evenodd"
                 />
               </motion.svg>
-              <span>An error occurred. Please try again later.</span>
+              <span>
+                Failed to send your message. Please try again or contact
+                directly at ryan.viana@grupoprisma.tech
+              </span>
             </div>
           </motion.div>
         )}
@@ -371,11 +388,11 @@ const ContactForm = () => {
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
-                animate={{ x: [0, 5, 0] }}
+                animate={{ x: [0, 5] }}
                 transition={{
                   repeat: Infinity,
-                  repeatType: "mirror",
-                  duration: 1.5,
+                  repeatType: "reverse",
+                  duration: 0.75,
                   ease: "easeInOut",
                 }}
               >

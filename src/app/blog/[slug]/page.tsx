@@ -42,6 +42,7 @@ export default async function BlogPostPage({
 }: {
   params: { slug: string };
 }) {
+  // Fetch blog post from the API with fallback to static data
   const post = await getBlogPostBySlug(params.slug);
 
   if (!post) {
@@ -127,6 +128,7 @@ export default async function BlogPostPage({
                 src="/profile-placeholder.jpg"
                 alt="Ryan Viana"
                 fill
+                sizes="4rem"
                 style={{ objectFit: "cover" }}
               />
             </div>
