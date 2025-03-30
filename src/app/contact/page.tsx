@@ -180,7 +180,7 @@ const ContactPage = () => {
         className="text-gray-600 dark:text-gray-400 text-center max-w-2xl mx-auto mb-16"
         variants={fadeInUp}
       >
-        Have a question or want to work together? Feel free to reach out!
+        Feel free to reach out!
       </motion.p>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">

@@ -250,7 +250,7 @@ export default function Home() {
             className="text-lg sm:text-xl md:text-3xl font-bold mb-3 md:mb-4 text-white"
             variants={fadeInUp}
           >
-            Interested in working together?
+            Interested in getting in touch?
           </motion.h2>
           <motion.p
             key="cta-description"

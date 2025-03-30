@@ -311,11 +311,9 @@ const AboutPage = () => {
 
       {/* CTA Section */}
       <motion.div className="mt-16 text-center py-12 card" variants={fadeInUp}>
-        <h2 className="text-2xl font-bold mb-4">Let&apos;s Work Together</h2>
+        <h2 className="text-2xl font-bold mb-4">Let&apos;s get in Touch</h2>
         <p className="text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
-          I&apos;m currently available for freelance work or full-time
-          positions. If you&apos;re interested in collaborating or have any
-          questions, feel free to reach out!
+          Feel free to reach out!
         </p>
         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
           <Link
