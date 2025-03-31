@@ -139,7 +139,7 @@ export default function BlogPostPage() {
             remarkPlugins={[remarkGfm]}
             rehypePlugins={[rehypeSlug, rehypeHighlight]}
             components={{
-              a: ({ node, ...props }) => (
+              a: ({ ...props }) => (
                 <a
                   {...props}
                   className="text-blue-600 hover:text-blue-800 transition-colors underline"
@@ -151,27 +151,38 @@ export default function BlogPostPage() {
                   }
                 />
               ),
-              h1: ({ node, ...props }) => (
+              h1: ({ ...props }) => (
                 <h1 {...props} className="text-3xl font-bold my-6" />
               ),
-              h2: ({ node, ...props }) => (
+              h2: ({ ...props }) => (
                 <h2 {...props} className="text-2xl font-bold my-5" />
               ),
-              h3: ({ node, ...props }) => (
+              h3: ({ ...props }) => (
                 <h3 {...props} className="text-xl font-semibold my-4" />
               ),
-              img: ({ node, ...props }) => (
+              img: ({ ...props }) => (
                 <div className="my-6">
-                  <img {...props} className="rounded-md mx-auto" />
+                  <div
+                    className="relative w-full"
+                    style={{ minHeight: "200px" }}
+                  >
+                    <Image
+                      src={props.src || "/placeholder-image.jpg"}
+                      alt={props.alt || "Blog post image"}
+                      fill
+                      style={{ objectFit: "contain" }}
+                      className="rounded-md mx-auto"
+                    />
+                  </div>
                 </div>
               ),
-              code: ({ node, ...props }) => (
+              code: ({ ...props }) => (
                 <code
                   {...props}
                   className="bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded text-sm"
                 />
               ),
-              pre: ({ node, ...props }) => (
+              pre: ({ ...props }) => (
                 <pre
                   {...props}
                   className="bg-gray-800 dark:bg-gray-900 text-gray-100 p-4 rounded-md my-6 overflow-x-auto"
