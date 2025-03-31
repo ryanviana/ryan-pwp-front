@@ -6,6 +6,9 @@ import Link from "next/link";
 import { getBlogPostBySlug, BlogPost, RelatedPost } from "@/lib/blog";
 import { useParams } from "next/navigation";
 import ReactMarkdown from "react-markdown";
+import rehypeHighlight from "rehype-highlight";
+import rehypeSlug from "rehype-slug";
+import remarkGfm from "remark-gfm";
 
 export default function BlogPostPage() {
   const params = useParams();
@@ -131,8 +134,53 @@ export default function BlogPostPage() {
           </div>
         </header>
 
-        <div className="prose prose-lg dark:prose-invert max-w-none mb-12">
-          <ReactMarkdown>{post.content}</ReactMarkdown>
+        <div className="prose prose-lg dark:prose-invert max-w-none mb-12 prose-headings:font-bold prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl prose-a:text-blue-600 prose-p:text-base prose-p:leading-7 prose-li:text-base prose-pre:bg-gray-800 prose-pre:text-gray-100 dark:prose-pre:bg-gray-900 dark:prose-pre:text-gray-100 prose-pre:rounded-md prose-pre:overflow-x-auto prose-code:text-sm">
+          <ReactMarkdown
+            remarkPlugins={[remarkGfm]}
+            rehypePlugins={[rehypeSlug, rehypeHighlight]}
+            components={{
+              a: ({ node, ...props }) => (
+                <a
+                  {...props}
+                  className="text-blue-600 hover:text-blue-800 transition-colors underline"
+                  target={props.href?.startsWith("http") ? "_blank" : undefined}
+                  rel={
+                    props.href?.startsWith("http")
+                      ? "noopener noreferrer"
+                      : undefined
+                  }
+                />
+              ),
+              h1: ({ node, ...props }) => (
+                <h1 {...props} className="text-3xl font-bold my-6" />
+              ),
+              h2: ({ node, ...props }) => (
+                <h2 {...props} className="text-2xl font-bold my-5" />
+              ),
+              h3: ({ node, ...props }) => (
+                <h3 {...props} className="text-xl font-semibold my-4" />
+              ),
+              img: ({ node, ...props }) => (
+                <div className="my-6">
+                  <img {...props} className="rounded-md mx-auto" />
+                </div>
+              ),
+              code: ({ node, ...props }) => (
+                <code
+                  {...props}
+                  className="bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded text-sm"
+                />
+              ),
+              pre: ({ node, ...props }) => (
+                <pre
+                  {...props}
+                  className="bg-gray-800 dark:bg-gray-900 text-gray-100 p-4 rounded-md my-6 overflow-x-auto"
+                />
+              ),
+            }}
+          >
+            {post.content}
+          </ReactMarkdown>
         </div>
 
         {/* Author section */}

@@ -8,6 +8,63 @@ module.exports = {
   darkMode: "class",
   theme: {
     extend: {
+      typography: {
+        DEFAULT: {
+          css: {
+            color: "hsl(var(--foreground))",
+            a: {
+              color: "hsl(var(--primary))",
+              "&:hover": {
+                color: "hsl(var(--primary-600))",
+              },
+            },
+            h1: {
+              color: "hsl(var(--foreground))",
+              fontWeight: "800",
+            },
+            h2: {
+              color: "hsl(var(--foreground))",
+              fontWeight: "700",
+            },
+            h3: {
+              color: "hsl(var(--foreground))",
+              fontWeight: "600",
+            },
+            h4: {
+              color: "hsl(var(--foreground))",
+              fontWeight: "600",
+            },
+            code: {
+              color: "hsl(var(--foreground))",
+              backgroundColor: "hsl(var(--muted))",
+              padding: "0.25rem 0.4rem",
+              borderRadius: "0.25rem",
+              fontWeight: "400",
+            },
+            "code::before": {
+              content: '""',
+            },
+            "code::after": {
+              content: '""',
+            },
+            blockquote: {
+              borderLeftColor: "hsl(var(--primary-200))",
+            },
+            hr: {
+              borderColor: "hsl(var(--border))",
+            },
+            strong: {
+              color: "hsl(var(--foreground))",
+              fontWeight: "600",
+            },
+          },
+        },
+        dark: {
+          css: {
+            color: "hsl(var(--foreground))",
+          },
+        },
+      },
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
@@ -98,5 +155,5 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/typography")],
 };
