@@ -1,51 +1,64 @@
-import { Metadata } from "next";
+"use client";
+
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  getBlogPostBySlug,
-  getAllBlogPosts,
-  BlogPost,
-  RelatedPost,
-} from "@/lib/blog";
-import { MDXRemote } from "next-mdx-remote/rsc";
+import { getBlogPostBySlug, BlogPost, RelatedPost } from "@/lib/blog";
+import { useParams } from "next/navigation";
+import ReactMarkdown from "react-markdown";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
-  const { slug } = await params;
-  const post = await getBlogPostBySlug(slug);
+export default function BlogPostPage() {
+  const params = useParams();
+  const slug = params.slug as string;
 
-  if (!post) {
-    return {
-      title: "Post Not Found | Ryan's Portfolio",
-      description: "The requested blog post could not be found",
+  const [post, setPost] = useState<BlogPost | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const postData = await getBlogPostBySlug(slug);
+        setPost(postData);
+      } catch (error) {
+        console.error("Error loading blog post:", error);
+        setPost(null);
+      } finally {
+        setLoading(false);
+      }
     };
+
+    if (slug) {
+      fetchPost();
+    }
+  }, [slug]);
+
+  if (loading) {
+    return (
+      <div className="container mx-auto px-4 py-12">
+        <div className="max-w-3xl mx-auto">
+          <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded w-1/2 mb-6 animate-pulse"></div>
+          <div className="h-12 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-6 animate-pulse"></div>
+          <div className="flex gap-2 mb-8">
+            {[...Array(3)].map((_, i) => (
+              <div
+                key={i}
+                className="h-8 w-20 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"
+              ></div>
+            ))}
+          </div>
+          <div className="relative w-full aspect-video mb-10 rounded-xl bg-gray-200 dark:bg-gray-700 animate-pulse"></div>
+          <div className="space-y-4">
+            {[...Array(6)].map((_, i) => (
+              <div
+                key={i}
+                className="h-6 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"
+              ></div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
   }
-
-  return {
-    title: `${post.title} | Ryan&apos;s Portfolio`,
-    description: post.excerpt,
-  };
-}
-
-export async function generateStaticParams() {
-  const posts = await getAllBlogPosts();
-
-  return posts.map((post: BlogPost) => ({
-    slug: post.slug,
-  }));
-}
-
-export default async function BlogPostPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  // Fetch blog post from the API with fallback to static data
-  const { slug } = await params;
-  const post = await getBlogPostBySlug(slug);
 
   if (!post) {
     return (
@@ -119,7 +132,7 @@ export default async function BlogPostPage({
         </header>
 
         <div className="prose prose-lg dark:prose-invert max-w-none mb-12">
-          <MDXRemote source={post.content} />
+          <ReactMarkdown>{post.content}</ReactMarkdown>
         </div>
 
         {/* Author section */}
