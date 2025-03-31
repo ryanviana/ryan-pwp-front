@@ -12,27 +12,67 @@ module.exports = {
         DEFAULT: {
           css: {
             color: "hsl(var(--foreground))",
+            maxWidth: "none",
             a: {
               color: "hsl(var(--primary))",
               "&:hover": {
                 color: "hsl(var(--primary-600))",
               },
+              textDecoration: "underline",
             },
             h1: {
               color: "hsl(var(--foreground))",
               fontWeight: "800",
+              fontSize: "1.875rem",
+              lineHeight: "2.25rem",
+              marginTop: "1.5rem",
+              marginBottom: "1.5rem",
             },
             h2: {
               color: "hsl(var(--foreground))",
               fontWeight: "700",
+              fontSize: "1.5rem",
+              lineHeight: "2rem",
+              marginTop: "1.25rem",
+              marginBottom: "1.25rem",
             },
             h3: {
               color: "hsl(var(--foreground))",
               fontWeight: "600",
+              fontSize: "1.25rem",
+              lineHeight: "1.75rem",
+              marginTop: "1rem",
+              marginBottom: "1rem",
             },
             h4: {
               color: "hsl(var(--foreground))",
               fontWeight: "600",
+              marginTop: "0.75rem",
+              marginBottom: "0.75rem",
+            },
+            p: {
+              marginTop: "1rem",
+              marginBottom: "1rem",
+              fontSize: "1rem",
+              lineHeight: "1.75rem",
+            },
+            li: {
+              marginTop: "0.5rem",
+              marginBottom: "0.5rem",
+              fontSize: "1rem",
+            },
+            ul: {
+              marginTop: "1.25rem",
+              marginBottom: "1.25rem",
+            },
+            ol: {
+              marginTop: "1.25rem",
+              marginBottom: "1.25rem",
+            },
+            blockquote: {
+              fontStyle: "italic",
+              color: "hsl(var(--foreground))",
+              borderLeftColor: "hsl(var(--primary-200))",
             },
             code: {
               color: "hsl(var(--foreground))",
@@ -40,6 +80,7 @@ module.exports = {
               padding: "0.25rem 0.4rem",
               borderRadius: "0.25rem",
               fontWeight: "400",
+              fontSize: "0.875rem",
             },
             "code::before": {
               content: '""',
@@ -47,21 +88,47 @@ module.exports = {
             "code::after": {
               content: '""',
             },
-            blockquote: {
-              borderLeftColor: "hsl(var(--primary-200))",
+            pre: {
+              backgroundColor: "hsl(var(--muted))",
+              borderRadius: "0.375rem",
+              padding: "1rem",
+              overflow: "auto",
+              marginTop: "1.5rem",
+              marginBottom: "1.5rem",
             },
             hr: {
               borderColor: "hsl(var(--border))",
+              marginTop: "2rem",
+              marginBottom: "2rem",
             },
             strong: {
               color: "hsl(var(--foreground))",
               fontWeight: "600",
+            },
+            img: {
+              marginTop: "1.5rem",
+              marginBottom: "1.5rem",
+              borderRadius: "0.375rem",
             },
           },
         },
         dark: {
           css: {
             color: "hsl(var(--foreground))",
+            a: {
+              color: "hsl(var(--primary))",
+            },
+            blockquote: {
+              color: "hsl(var(--foreground))",
+            },
+            pre: {
+              backgroundColor: "hsl(var(--accent))",
+              color: "hsl(var(--accent-foreground))",
+            },
+            code: {
+              backgroundColor: "hsl(var(--muted))",
+              color: "hsl(var(--foreground))",
+            },
           },
         },
       },

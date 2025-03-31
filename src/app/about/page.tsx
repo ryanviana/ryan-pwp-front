@@ -72,7 +72,10 @@ const AboutPage = () => {
 
       {/* Hero Section */}
       <motion.div className="flex flex-col md:flex-row items-center gap-8 mb-16">
-        <motion.div className="w-full md:w-1/2" variants={slideInLeft}>
+        <motion.div
+          className="w-full md:w-1/2 order-2 md:order-1"
+          variants={slideInLeft}
+        >
           <h2 className="text-2xl font-bold mb-4">Hi, I&apos;m Ryan</h2>
           <p className="text-gray-600 dark:text-gray-400 mb-4">
             I&apos;m a passionate software developer with experience building
@@ -115,7 +118,7 @@ const AboutPage = () => {
         </motion.div>
 
         <motion.div
-          className="w-full md:w-1/2 flex justify-center"
+          className="w-full md:w-1/2 flex justify-center order-1 md:order-2 mb-8 md:mb-0"
           variants={slideInRight}
         >
           <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-blue-500 shadow-xl">
