@@ -177,7 +177,7 @@ const Footer = () => {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
         >
-          <p>© {currentYear} Your Name. All rights reserved.</p>
+          <p>© {currentYear} Ryan. All rights reserved.</p>
           <motion.p
             className="mt-2"
             initial={{ opacity: 0 }}
